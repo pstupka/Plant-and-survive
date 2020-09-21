@@ -1,10 +1,11 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Assets/Player/Player_idle.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Player/Player_jump.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Player/Player_run.png" type="Texture" id=3]
 [ext_resource path="res://src/Actors/Player.gd" type="Script" id=4]
 [ext_resource path="res://Assets/Audio/audio_jump.wav" type="AudioStream" id=5]
+[ext_resource path="res://src/Misc/Footstep.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2.38997, 3.81079 )
@@ -102,6 +103,7 @@ animations = [ {
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 4 )
+foot_step = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 1.90735e-06, 0.0787449 )

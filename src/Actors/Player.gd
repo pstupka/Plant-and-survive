@@ -1,11 +1,13 @@
 extends Actor
 
-
+export(PackedScene) var foot_step
 export var stomp_impulse = 1000.0
+
+onready var _animatedSprite = $AnimatedSprite
 
 
 func _ready() -> void:
-	$AnimatedSprite.play("idle")
+	_animatedSprite.play("idle")
 
 
 func _on_EnemyDetector_area_entered(area: Area2D) -> void:
@@ -26,6 +28,8 @@ func _physics_process(delta: float) -> void:
 	set_animation_state(_velocity, is_jump_interrupted)
 	var format_string = "_velocity: [%f, %f]"
 	$RichTextLabel.text = format_string % [_velocity.x, _velocity.y]
+	
+	handle_player_particles()
 
 
 func get_direction() -> Vector2:
@@ -58,16 +62,25 @@ func calculate_stomp_velocity(linear_velocity: Vector2, impulse: float) -> Vecto
 
 func set_animation_state(velocity: Vector2, is_jump_interrupted: bool) -> void:
 	if velocity.y < 0:
-		$AnimatedSprite.animation = "jump"
+		_animatedSprite.animation = "jump"
 		if Input.is_action_just_pressed("jump"): 
 			$AudioPlayer.play()
 	elif velocity.y > 0:
-		$AnimatedSprite.animation = "fall"
+		_animatedSprite.animation = "fall"
 	elif velocity.x > 0:
-		$AnimatedSprite.flip_h = false
-		$AnimatedSprite.animation = "run"
+		_animatedSprite.flip_h = false
+		_animatedSprite.animation = "run"
 	elif velocity.x < 0:
-		$AnimatedSprite.flip_h = true
-		$AnimatedSprite.animation = "run"
+		_animatedSprite.flip_h = true
+		_animatedSprite.animation = "run"
 	else:
-		$AnimatedSprite.animation = "idle"
+		_animatedSprite.animation = "idle"
+	
+		
+func handle_player_particles():
+	if _animatedSprite.animation == "run":
+		if _animatedSprite.frame == 0 or _animatedSprite.frame == 4:
+			var footstep = foot_step.instance()
+			footstep.emitting = true
+			footstep.global_position = Vector2(self.position.x, self.position.y+3)
+			get_parent().add_child(footstep)
