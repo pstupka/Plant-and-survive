@@ -24,6 +24,10 @@ config/name="2020 09 Vim Jam"
 run/main_scene="res://src/Levels/TestLevel.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+MusicController="*res://src/Misc/MusicController.tscn"
+
 [display]
 
 window/size/width=320

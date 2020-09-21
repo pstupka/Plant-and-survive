@@ -59,6 +59,8 @@ func calculate_stomp_velocity(linear_velocity: Vector2, impulse: float) -> Vecto
 func set_animation_state(velocity: Vector2, is_jump_interrupted: bool) -> void:
 	if velocity.y < 0:
 		$AnimatedSprite.animation = "jump"
+		if Input.is_action_just_pressed("jump"): 
+			$AudioPlayer.play()
 	elif velocity.y > 0:
 		$AnimatedSprite.animation = "fall"
 	elif velocity.x > 0:
