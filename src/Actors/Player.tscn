@@ -128,5 +128,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
