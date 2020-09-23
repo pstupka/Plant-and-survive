@@ -40,7 +40,7 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 2.46864, 2.20118 )
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 4.05912, 3.29774 )
 
 [sub_resource type="CircleShape2D" id=8]
@@ -73,7 +73,7 @@ collision_layer = 2
 [node name="HitColliderShape" type="CollisionShape2D" parent="EnemyBody"]
 modulate = Color( 0.152941, 0.419608, 0.00392157, 1 )
 position = Vector2( 0.0118825, -0.565974 )
-shape = SubResource( 9 )
+shape = SubResource( 12 )
 
 [node name="DiscoverArea" type="Area2D" parent="."]
 
@@ -81,7 +81,6 @@ shape = SubResource( 9 )
 shape = SubResource( 8 )
 
 [node name="DebugLabel" type="Label" parent="."]
-visible = false
 margin_left = -51.3228
 margin_top = -23.2396
 margin_right = 53.6772
