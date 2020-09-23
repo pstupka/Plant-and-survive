@@ -14,5 +14,5 @@ func stop():
 	_player.stop()
 
 func _ready():
-	_player.set_volume_db(-10)
+	_player.set_volume_db(-5)
 	play("res://Assets/Audio/audio_music.wav")
