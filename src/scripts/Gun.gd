@@ -15,7 +15,6 @@ func _process(delta):
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("shoot"):
 		var bullet = _bullet.instance()
-		bullet.angle = rotation
-		bullet.emitting = true
-		#bullet.transform = global_transform
-		add_child(bullet)
+		bullet.set_shoot_direction((get_global_mouse_position() - global_position).normalized())
+		bullet.position = global_position
+		get_tree().current_scene.add_child(bullet)
