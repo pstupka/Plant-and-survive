@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 
-const VELOCITY = 100
+const VELOCITY = 200
 var _direction: Vector2 
 
 
@@ -11,10 +11,7 @@ func _ready():
 
 
 func _physics_process(delta):
-	var collision = move_and_collide(_direction * VELOCITY * delta)
-	if collision:
-		print(collision)
-		queue_free()
+	position += _direction * VELOCITY * delta
 
 
 func set_shoot_direction(direction: Vector2):
@@ -23,3 +20,8 @@ func set_shoot_direction(direction: Vector2):
 
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
+
+
+func _on_Bullet_body_entered(body):
+	if body.is_in_group("enemies"):
+		queue_free()

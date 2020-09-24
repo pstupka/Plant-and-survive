@@ -13,6 +13,7 @@ func _ready():
 	add_to_group("enemies")
 	start_position = global_position
 	_animated_sprite.play("idle")
+	set_physics_process(false)
 
 
 func _physics_process(delta):
@@ -24,16 +25,16 @@ func _physics_process(delta):
 				knockback_direction, 
 				knockback_impulse)
 			_velocity = _velocity*0.02
-		move_and_collide(_velocity * speed * delta)
+		position += _velocity * speed * delta
 	else:
-		if (global_position.distance_to(start_position) > MIN_DISTANCE):
+		if global_position.distance_to(start_position) > MIN_DISTANCE:
 			_velocity = global_position.direction_to(start_position)
 		else: 
 			_velocity = Vector2.ZERO
-		move_and_collide(_velocity * speed * 0.5 * delta)
-	$DebugLabel.text = "position = %f, %f" % [position.x, position.y]
+			set_physics_process(false)
+		position += _velocity * speed * 0.5 * delta
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	handle_animation_state(_velocity)
 
 
@@ -50,6 +51,7 @@ func _on_DiscoverArea_body_entered(body):
 	if body.name == "Player":
 		target = body
 		is_attacking = true
+		set_physics_process(true)
 
 
 func _on_DiscoverArea_body_exited(body):

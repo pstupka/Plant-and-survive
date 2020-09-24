@@ -1,7 +1,11 @@
 extends Actor
 
-export(PackedScene) var foot_step
 
+signal health_changed
+signal died
+
+
+export(PackedScene) var foot_step
 
 onready var _animated_sprite = $AnimatedSprite
 onready var _audio_player = $AudioPlayer
@@ -14,23 +18,32 @@ func _ready() -> void:
 	_animated_sprite.play("idle")
 	_audio_player.set_volume_db(-10)
 
-
 func _physics_process(delta: float) -> void:
+	if state == STATES.DEAD:
+		_velocity = move_and_slide(-FLOOR_NORMAL * 10, FLOOR_NORMAL)
+		return
+	
 	var is_jump_interrupted: = Input.is_action_just_released("jump") and _velocity.y < 0
 	var direction: = get_direction()
 
 	if knockback:
-		_velocity = handle_knockback(_velocity, knockback_direction, knockback_impulse)
+		_velocity = handle_knockback(
+			_velocity,
+			knockback_direction, 
+			knockback_impulse)
 	else:
-		_velocity = calculate_move_velocity(_velocity, direction, speed, is_jump_interrupted)
+		_velocity = calculate_move_velocity(
+			_velocity, 
+			direction, 
+			speed, 
+			delta, 
+			is_jump_interrupted)
 	_velocity = move_and_slide(_velocity, FLOOR_NORMAL)
-	
-	$RichTextLabel.text = "Velocity: %f, %f" % [_velocity.x, _velocity.y]
 	
 	handle_player_particles()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	handle_animation_state(_velocity)
 
 
@@ -45,11 +58,12 @@ func calculate_move_velocity(
 		linear_velocity: Vector2,
 		direction: Vector2,
 		speed: Vector2,
+		delta: float,
 		is_jump_interrupted: bool
 	) -> Vector2:
 	var out: = linear_velocity
 	out.x = speed.x * direction.x
-	out.y += gravity * get_physics_process_delta_time()
+	out.y += gravity * delta
 	if direction.y == -1.0:
 		out.y = speed.y * direction.y
 	if is_jump_interrupted:
@@ -92,10 +106,30 @@ func play_audio_from_resource(name: String):
 	_audio_player.play()
 
 
+func take_damage(damage: float):
+	if state == STATES.DEAD:
+		return
+	
+	current_health -= damage
+	if current_health <= 0:
+		current_health = 0
+		state = STATES.DEAD
+		handle_die()
+
+	emit_signal("health_changed", current_health)
+
+func handle_die():
+	emit_signal("died")
+	_animated_sprite.animation = "die"
+	set_process(false)
+	$Gun.queue_free()
+
 func _on_Player_body_entered(body):
 	if body.is_in_group("enemies"):
 		play_audio_from_resource("res://Assets/Audio/audio_player_hit.wav")
-		knockback = 10
+		knockback = KNOCKBACK_COOLDOWN
 		knockback_direction = global_position.direction_to(body.global_position)
+		take_damage(20)
+
 
 

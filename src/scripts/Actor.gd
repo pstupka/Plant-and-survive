@@ -13,7 +13,16 @@ var _velocity: = Vector2.ZERO
 export var knockback_impulse = 100.0
 var knockback_direction: Vector2
 var knockback = 0
+const KNOCKBACK_COOLDOWN = 10
 
+# Health section
+export var max_health = 100
+var current_health = max_health
+
+
+# Dead or alive
+enum STATES {ALIVE, DEAD}
+var state = STATES.ALIVE
 
 func handle_knockback(
 		linear_velocity: Vector2,
@@ -26,3 +35,4 @@ func handle_knockback(
 	out = -direction * impulse
 	out.y = out.y * 0.5
 	return out
+

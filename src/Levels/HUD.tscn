@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Assets/Player/health_bar.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Player/health_bar_filled.png" type="Texture" id=2]
+[ext_resource path="res://src/scripts/HUD.gd" type="Script" id=3]
+
+[node name="HUD" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HealthBar" type="TextureProgress" parent="CanvasLayer"]
+margin_left = 9.89631
+margin_top = 9.72936
+margin_right = 57.8963
+margin_bottom = 18.7294
+value = 100.0
+texture_under = ExtResource( 1 )
+texture_progress = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
