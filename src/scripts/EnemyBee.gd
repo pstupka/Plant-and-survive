@@ -39,11 +39,10 @@ func _process(_delta: float) -> void:
 
 
 func handle_animation_state(velocity: Vector2) -> void:
-	if knockback:
-		if velocity.x > 0:
-			_animated_sprite.flip_h = false
-		elif velocity.x < 0:
-			_animated_sprite.flip_h = true
+	if velocity.x > 0:
+		_animated_sprite.flip_h = false
+	elif velocity.x < 0:
+		_animated_sprite.flip_h = true
 	_animated_sprite.animation = "attack" if is_attacking else "idle"
 
 

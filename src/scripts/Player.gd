@@ -1,7 +1,7 @@
 extends Actor
 
 
-signal health_changed
+signal health_changed(value)
 signal died
 
 

@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="2020 09 Vim Jam"
-run/main_scene="res://src/Levels/TestLevel.tscn"
+run/main_scene="res://src/Levels/Main.tscn"
 config/icon="res://icon.png"
 
 [autoload]

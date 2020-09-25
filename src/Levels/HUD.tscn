@@ -4,12 +4,10 @@
 [ext_resource path="res://Assets/Player/health_bar_filled.png" type="Texture" id=2]
 [ext_resource path="res://src/scripts/HUD.gd" type="Script" id=3]
 
-[node name="HUD" type="Node2D"]
+[node name="HUD" type="CanvasLayer"]
 script = ExtResource( 3 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="HealthBar" type="TextureProgress" parent="CanvasLayer"]
+[node name="HealthBar" type="TextureProgress" parent="."]
 margin_left = 9.89631
 margin_top = 9.72936
 margin_right = 57.8963
