@@ -27,8 +27,8 @@ func _input(_event):
 		bullet.transform = global_transform
 		get_tree().current_scene.add_child(bullet)
 
-
 func play_audio_from_resource(name: String):
 	var tmp_stream = load(name)
 	_audio_player.set_stream(tmp_stream)
 	_audio_player.play()
+

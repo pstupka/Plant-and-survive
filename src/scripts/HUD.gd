@@ -3,6 +3,7 @@ extends CanvasLayer
 
 onready var _health_bar = $HealthBar
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var player_max_health = 100
@@ -12,7 +13,9 @@ func _on_Player_health_changed(value):
 	_health_bar.value = value
 	
 func hide():
-	_health_bar.hide()
+	for node in get_children():
+		node.hide()
 
 func show():
-	_health_bar.show()
+	for node in get_children():
+		node.show()

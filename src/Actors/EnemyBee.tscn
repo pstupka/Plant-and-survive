@@ -55,7 +55,7 @@ speed = Vector2( 30, 30 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )
 animation = "idle"
-frame = 1
+frame = 2
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -75,6 +75,7 @@ position = Vector2( 0.0118825, -0.565974 )
 shape = SubResource( 8 )
 
 [node name="DiscoverArea" type="Area2D" parent="."]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DiscoverArea"]
 position = Vector2( -0.0415783, 0 )

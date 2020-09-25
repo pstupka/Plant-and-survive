@@ -42,17 +42,14 @@ func _physics_process(delta: float) -> void:
 	
 	handle_player_particles()
 
-
 func _process(_delta: float) -> void:
 	handle_animation_state(_velocity)
-
 
 func get_direction() -> Vector2:
 	return Vector2(
 		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
 		-1.0 if Input.is_action_just_pressed("jump") and is_on_floor() else 1.0
 	) 
-
 
 func calculate_move_velocity(
 		linear_velocity: Vector2,
@@ -72,7 +69,6 @@ func calculate_move_velocity(
 	out.x = clamp(out.x, MIN_VELOCITY, MAX_VELOCITY)
 	return out
 
-
 func handle_animation_state(velocity: Vector2) -> void:
 	if velocity.y < 0:
 		_animated_sprite.animation = "jump"
@@ -89,7 +85,6 @@ func handle_animation_state(velocity: Vector2) -> void:
 	else:
 		_animated_sprite.animation = "idle"
 
-
 func handle_player_particles():
 	if _animated_sprite.animation == "run":
 		if _animated_sprite.frame == 0 or _animated_sprite.frame == 4:
@@ -99,12 +94,10 @@ func handle_player_particles():
 			get_parent().add_child(footstep)
 			play_audio_from_resource("res://Assets/Audio/audio_footstep.wav")
 
-
 func play_audio_from_resource(name: String):
 	var tmp_stream = load(name)
 	_audio_player.set_stream(tmp_stream)
 	_audio_player.play()
-
 
 func take_damage(damage: float):
 	if state == STATES.DEAD:
@@ -129,7 +122,4 @@ func _on_Player_body_entered(body):
 		play_audio_from_resource("res://Assets/Audio/audio_player_hit.wav")
 		knockback = KNOCKBACK_COOLDOWN
 		knockback_direction = global_position.direction_to(body.global_position)
-		take_damage(20)
-
-
-
+		take_damage(5)
