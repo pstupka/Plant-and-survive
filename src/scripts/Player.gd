@@ -17,6 +17,7 @@ var MAX_VELOCITY = 200
 func _ready() -> void:
 	_animated_sprite.play("idle")
 	_audio_player.set_volume_db(-10)
+	position = _start_position
 
 func _physics_process(delta: float) -> void:
 	if state == STATES.DEAD:
@@ -123,3 +124,10 @@ func _on_Player_body_entered(body):
 		knockback = KNOCKBACK_COOLDOWN
 		knockback_direction = global_position.direction_to(body.global_position)
 		take_damage(5)
+
+
+func _on_Player_area_entered(area):
+	if area.is_in_group("resetPlayer"):
+		position = _start_position
+	if area.is_in_group("nextLevel"):
+		position = _start_position

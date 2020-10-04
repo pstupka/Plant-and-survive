@@ -14,37 +14,39 @@ var level = 0
 func _ready():
 	$HUD.hide()
 
+
 func new_game():
 	randomize()
 	level = 1
+	$HUD/LevelNumber.text = "Level %d" % [level]
 	player = _player.instance()
-	player.position = $StartPosition.position
+	player._start_position = $StartPosition.position
 	add_child(player)
 	player.connect("died", self, "_on_Player_died")
 	player.connect("health_changed", $HUD, "_on_Player_health_changed")
 	$HUD.show()
-	spawn_enemy()
+	spawn_enemies()
 	
-	spawn_items(10)
+	register_items()
 
 # Function to spawn items inthe world
-func spawn_items(count):
-	for i in 10:
-		var item = _item_crate.instance()
-		item.position = Vector2(i*100,80)
-		add_child(item)
-		item.connect("picked", self, "_on_item_picked", [item])
-		
-	# Auto generated items
+func register_items():
 	var items = get_tree().get_nodes_in_group("items")
 	for item in items:
 		item.connect("picked", self, "_on_item_picked", [item])
 
-func spawn_enemy():
-	var enemy = _enemy.instance()
-	enemy.position = $StartPosition.position
-	enemy.position.x += 200
-	add_child(enemy)
+func spawn_enemies():
+	for i in 10*level:
+		var enemy = _enemy.instance()
+		enemy.position.x = randi()%800
+		enemy.position.y = randi()%240 - 160
+		add_child(enemy)
+		
+	for i in 10*level:
+		var enemy = _enemy.instance()
+		enemy.position.x = randi()%870 + 830
+		enemy.position.y = randi()%400 - 160
+		add_child(enemy)
 
 func _on_Player_died():
 	$HUD.hide()
@@ -58,3 +60,13 @@ func _on_item_picked(item):
 		"plant01":
 			plants01_collected += 1
 			$HUD/Plant01Label.text = "x  %d" % [plants01_collected]
+
+
+func _on_NextLevel_area_entered(area):
+	if area.is_in_group("PlayerArea"):
+		level += 1
+		$HUD/LevelNumber.text = "Level %d" % [level]
+		spawn_enemies()
+		var items = get_tree().get_nodes_in_group("items")
+		for item in items:
+			item.show()

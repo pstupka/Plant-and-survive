@@ -17,7 +17,7 @@ func _on_item_input_event(viewport, event, shape_idx):
 	if Input.is_action_just_pressed("pick") and can_be_picked:
 		can_be_picked = false
 		emit_signal("picked")
-		queue_free()
+		hide()
 
 func _on_item_area_exited(area):
 	if area.is_in_group("pick"):

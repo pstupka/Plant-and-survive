@@ -8,6 +8,7 @@ export var speed: = Vector2(50.0, 100.0)
 export var gravity: = 300.0
 
 var _velocity: = Vector2.ZERO
+var _start_position = Vector2.ZERO
 
 #knockback variables
 export var knockback_impulse = 100.0

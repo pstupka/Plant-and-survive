@@ -64,4 +64,7 @@ func _on_Enemy_body_entered(body):
 		knockback = 10
 		knockback_direction = global_position.direction_to(body.global_position)
 	if body.is_in_group("bullets"):
-		queue_free()
+		if current_health <= 0:
+			queue_free()
+		else:
+			current_health -= 50

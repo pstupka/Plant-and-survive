@@ -43,7 +43,7 @@ extents = Vector2( 2.46864, 2.20118 )
 radius = 4.92555
 
 [sub_resource type="CircleShape2D" id=9]
-radius = 54.9397
+radius = 81.5329
 
 [node name="Bee" type="KinematicBody2D"]
 z_index = 2
