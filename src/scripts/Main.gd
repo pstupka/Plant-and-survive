@@ -27,13 +27,13 @@ func new_game():
 	$HUD.show()
 	spawn_enemies()
 	
-	register_items()
+	call_deferred("register_items")
 
 # Function to spawn items inthe world
 func register_items():
 	var items = get_tree().get_nodes_in_group("items")
 	for item in items:
-		item.connect("picked", self, "_on_item_picked", [item])
+		item.connect("picked", self, "_on_item_picked")
 
 func spawn_enemies():
 	for i in 10*level:
@@ -66,7 +66,7 @@ func _on_NextLevel_area_entered(area):
 	if area.is_in_group("PlayerArea"):
 		level += 1
 		$HUD/LevelNumber.text = "Level %d" % [level]
-		spawn_enemies()
+#		spawn_enemies()
 		var items = get_tree().get_nodes_in_group("items")
 		for item in items:
 			item.show()
